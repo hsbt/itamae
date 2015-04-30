@@ -40,6 +40,7 @@ module Itamae
     option :ohai, type: :boolean, default: false
     option :vagrant, type: :boolean, default: false
     option :ask_password, type: :boolean, default: false
+    option :password, type: :string, aliases: ['-P']
     option :sudo, type: :boolean, default: true
     def ssh(*recipe_files)
       if recipe_files.empty?
@@ -75,4 +76,3 @@ module Itamae
     end
   end
 end
-

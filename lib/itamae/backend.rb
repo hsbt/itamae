@@ -154,7 +154,7 @@ module Itamae
       end
     end
 
-    # TODO: Make Specinfra's backends instanciatable 
+    # TODO: Make Specinfra's backends instanciatable
     class Local < Base
       private
       def create_specinfra_backend
@@ -197,6 +197,8 @@ module Itamae
           password = STDIN.noecho(&:gets).strip
           print "\n"
           opts.merge!(password: password)
+        elsif @options[:password]
+          opts.merge!(password: @options[:password])
         end
 
         opts
