@@ -1,3 +1,40 @@
+## v1.2.20
+
+Improvements
+
+- [Wrap host inventory value with Hashie::Mash to access it by a method call](https://github.com/itamae-kitchen/itamae/pull/135)
+
+## v1.2.19
+
+Features
+
+- [`create_home` attribute of user resource (by @xibbar)](https://github.com/itamae-kitchen/itamae/pull/131)
+
+## v1.2.18
+
+Features
+
+- `run_command` method in a recipe, definition and resource
+
+## v1.2.17
+
+Features
+
+- [Support provider for service resource (by @sonots)](https://github.com/itamae-kitchen/itamae/pull/134)
+
+## v1.2.16
+
+Improvements
+
+- [`force` option for `link` resource (by @mikeda)](https://github.com/itamae-kitchen/itamae/pull/128)
+
+## v1.2.15
+
+Bugfixes
+
+- [Fix --no-sudo to work properly (by @evalphobia)](https://github.com/itamae-kitchen/itamae/pull/126)
+- [Fix a glitch on raising exception when source doesn't exist (by @mozamimy)](https://github.com/itamae-kitchen/itamae/pull/125)
+
 ## v1.2.14
 
 Features

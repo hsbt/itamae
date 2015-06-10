@@ -3,6 +3,9 @@ node.reverse_merge!({
 })
 
 execute 'apt-get update'
+execute 'deluser --remove-home itamae2' do
+  only_if "id itamae2"
+end
 
 include_recipe "./included.rb"
 include_recipe "./included.rb" # including the same recipe is expected to be skipped.
@@ -21,6 +24,13 @@ user "update itamae user" do
   password "$1$TQz9gPMl$nHYrsA5W2ZdZ0Yn021BQH1"
   home '/home/itamae'
   shell '/bin/dash'
+end
+
+user "create itamae2 user with create home directory" do
+  username "itamae2"
+  create_home true
+  home "/home/itamae2"
+  shell "/bin/sh"
 end
 
 ######
@@ -170,6 +180,12 @@ link "/tmp-link" do
   to "/tmp"
 end
 
+execute "touch /tmp-link-force"
+link "/tmp-link-force" do
+  to "/tmp"
+  force true
+end
+
 #####
 
 local_ruby_block "greeting" do
@@ -292,4 +308,40 @@ file '/tmp/file_edit_sample' do
   block do |content|
     content.gsub!('world', 'Itamae')
   end
+end
+
+###
+
+unless run_command("echo -n Hello").stdout == "Hello"
+  raise "run_command in a recipe failed"
+end
+
+define :run_command_in_definition do
+  unless run_command("echo -n Hello").stdout == "Hello"
+    raise "run_command in a definition failed"
+  end
+end
+
+execute "echo Hello" do
+  unless run_command("echo -n Hello").stdout == "Hello"
+    raise "run_command in a resource failed"
+  end
+end
+
+local_ruby_block 'execute run_command' do
+  block do
+    unless run_command("echo -n Hello").stdout == "Hello"
+      raise "run_command in local_ruby_block failed"
+    end
+  end
+end
+
+###
+
+v1 = node.memory.total
+v2 = node[:memory][:total]
+v3 = node['memory']['total']
+
+unless v1 == v2 && v2 == v3 && v1 =~ /\A\d+kB\z/
+  raise "failed to fetch host inventory value (#{v1}, #{v2}, #{v3})"
 end
